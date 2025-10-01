@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cuidados Intensivos Obstétricos - Cronograma</title>
+    <style>
+        :root {
+            --primary-color: #0A2342;
+            --secondary-color: #D4AF37;
+            --accent-color: #8D99AE;
+            --text-color: #2D3748;
+            --background-color: #F8F9FA;
+            --light-text-color: #FFFFFF;
+            --shadow-sm: 0 1px 2px rgba(10, 35, 66, 0.1);
+            --shadow: 0 4px 6px -1px rgba(10, 35, 66, 0.2), 0 2px 4px -1px rgba(10, 35, 66, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(10, 35, 66, 0.2), 0 10px 10px -5px rgba(10, 35, 66, 0.1);
+            --shadow-xl: 0 25px 50px -12px rgba(10, 35, 66, 0.25);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica Neue, Arial,sans-serif;
+            background: var(--background-color);
+            min-height: 100vh;
+            padding: 0;
+            margin: 0;
+            color: var(--text-color);
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d2f54 100%);
+            padding: 2.5rem 0 2rem 0;
+            text-align: center;
+            position: relative;
+        }
+        .hero h1 {
+            font-weight: 800;
+            font-size: 3rem;
+            letter-spacing: -2px;
+            color: var(--light-text-color);
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            margin: 0.5rem 0;
+        }
+        .hero-img {
+            display: block;
+            margin: 1.5rem auto 0 auto;
+            max-width: 400px;
+            width: 90%;
+            border-radius: 18px;
+            box-shadow: var(--shadow-xl);
+            border: 3px solid var(--secondary-color);
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            padding: 0.5rem 0 1.5rem 0;
+            background: var(--light-text-color);
+            border-bottom: 3px solid var(--secondary-color);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+        nav a {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            transition: all .3s;
+        }
+        nav a:hover,
+        nav a.active {
+            background: var(--secondary-color);
+            color: var(--light-text-color);
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background: var(--light-text-color);
+            border-radius: 18px;
+            padding: 2rem 2rem 3rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .container p {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        .class-card {
+            background: var(--light-text-color);
+            border: 2px solid var(--accent-color);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+        .class-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--secondary-color);
+        }
+        .class-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .class-number {
+            background: linear-gradient(135deg, var(--primary-color), #0d2f54);
+            color: var(--light-text-color);
+            width: 45px;
+            height: 45px;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            text-align: center;
+            line-height: 45px;
+            user-select: none;
+            flex-shrink: 0;
+            border: 2px solid var(--secondary-color);
+        }
+        .class-date {
+            font-weight: 600;
+            font-size: 1rem;
+            flex-grow: 1;
+            color: var(--text-color);
+        }
+        .tutor-badge {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+        .tutor-icon {
+            margin-right: 0.4rem;
+        }
+        .class-topic {
+            margin-bottom: 1rem;
+        }
+        .topic-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+            color: var(--primary-color);
+        }
+        .topic-content {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        .objectives-toggle {
+            border: none;
+            background: none;
+            color: var(--secondary-color);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0;
+            margin-top: 0.5rem;
+            user-select: none;
+            transition: color 0.3s;
+        }
+        .objectives-toggle:hover {
+            color: var(--primary-color);
+        }
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+        .objectives-section {
+            display: none;
+            margin-top: 1rem;
+            animation: fade-in 0.5s ease forwards;
+            background: var(--background-color);
+            padding: 1rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--secondary-color);
+        }
+        .objectives-section.show {
+            display: block;
+        }
+        .objectives-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        .objectives-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+        .objectives-list li {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--text-color);
+        }
+        .objective-bullet {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 50%;
+            width: 1.2rem;
+            height: 1.2rem;
+            text-align: center;
+            line-height: 1.2rem;
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .exam-card {
+            background: linear-gradient(135deg, var(--primary-color), #0d2f54);
+            color: var(--light-text-color);
+            text-align: center;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow-xl);
+            font-weight: 700;
+            font-size: 1.75rem;
+            margin-top: 2rem;
+            user-select: none;
+            border: 3px solid var(--secondary-color);
+        }
+        .exam-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            color: var(--secondary-color);
+        }
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--primary-color);
+            color: var(--light-text-color);
+        }
+        footer p {
+            margin: 0.5rem 0;
+            color: var(--accent-color);
+        }
+        @media (max-width:800px){
+            .container{ padding:1rem;}
+            .hero h1{font-size:2.2rem;}
+            nav{gap:1rem;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Portada -->
+    <header class="hero">
+        <h1>Curso de Cuidados Intensivos Obstétricos</h1>
+        <p>Programa de residencia en cuidados intensivos adultos centrada en la paciente obstétrica.</p>
+        <!-- Imagen agregada por solicitud: foto de la Facultad -->
+        <img src="Facultad%20de%20ciencias%20medicas.png" alt="Fachada de la Facultad de Ciencias Médicas" class="hero-img" style="max-width: 800px;" onerror="this.onerror=null;this.src='https://www.saludycardiologia.com/wp-content/uploads/2023/09/medicina-obstetricia-emergencia.jpg'" />
+    </header>
+
+    <nav>
+        <a href="#cronograma" class="active">Cronograma</a>
+    </nav>
+
+    <div class="container" id="cronograma">
+        <p>Subespecialidad en Cuidados Intensivos del Adulto - Tercer Año</p>
+        <p>🗓 6 octubre - 7 noviembre 2025 | 9 clases + examen final</p>
+        <p>🕐 2 clases por semana (Martes y Viernes)</p>
+
+        <!-- Clase 1 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">1</div>
+                <div class="class-date">Martes 7 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Manzanárez</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática I: Cambios fisiológicos en el embarazo</div>
+                <div class="topic-content">1. Cambios fisiológicos por embarazo</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(1)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-1">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-1">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Describir los principales cambios fisiológicos maternos durante el embarazo y su impacto clínico</li>
+                    <li><span class="objective-bullet">2</span>Identificar la adaptación cardiovascular y hemodinámica normal en la paciente gestante</li>
+                    <li><span class="objective-bullet">3</span>Aplicar esta fisiología para la interpretación clínica de signos vitales en cuidados intensivos obstétricos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 2 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">2</div>
+                <div class="class-date">Viernes 10 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Espinoza</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática II: Crisis hipertensivas obstétricas</div>
+                <div class="topic-content">2. Crisis hipertensivas (incluye preeclampsia y síndrome de HELLP)</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(2)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-2">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-2">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Distinguir las diferentes crisis hipertensivas en embarazo y sus criterios diagnósticos</li>
+                    <li><span class="objective-bullet">2</span>Aplicar manejo clínico adecuado para preeclampsia severa y síndrome HELLP</li>
+                    <li><span class="objective-bullet">3</span>Interpretar resultados de laboratorio y uso de escalas pronósticas en estas crisis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 3 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">3</div>
+                <div class="class-date">Martes 14 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Altamirano</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática III: Reanimación avanzada obstétrica</div>
+                <div class="topic-content">3. Reanimación cardiopulmonar avanzada obstétrica</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(3)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-3">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-3">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Aplicar protocolos ACLS adaptados para la paciente obstétrica</li>
+                    <li><span class="objective-bullet">2</span>Demostrar técnicas de manejo de vía aérea difícil y cesárea perimortem</li>
+                    <li><span class="objective-bullet">3</span>Ejecutar reanimación efectiva y control de complicaciones durante paro cardiorrespiratorio</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 4 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">4</div>
+                <div class="class-date">Viernes 17 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Mendoza</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática IV: Hemorragia obstétrica</div>
+                <div class="topic-content">4. Hemorragia obstétrica</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(4)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-4">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-4">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Identificar causas y clasificación de hemorragia obstétrica</li>
+                    <li><span class="objective-bullet">2</span>Aplicar protocolos de reanimación hemostática masiva</li>
+                    <li><span class="objective-bullet">3</span>Reconocer indicaciones para manejo quirúrgico y embolización arterial</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 5 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">5</div>
+                <div class="class-date">Martes 21 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Manzanárez</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática V: Trastornos respiratorios en el embarazo</div>
+                <div class="topic-content">6. SDRA obstétrico, ventilación mecánica y manejo de vía aérea difícil</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(5)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-5">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-5">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Describir fisiopatología del SDRA en la paciente embarazada</li>
+                    <li><span class="objective-bullet">2</span>Aplicar estrategias de ventilación mecánica protectora y manejo avanzado de vía aérea</li>
+                    <li><span class="objective-bullet">3</span>Controlar sedación y analgesia adecuadas en ventilación mecánica obstétrica</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 6 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">6</div>
+                <div class="class-date">Viernes 24 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Espinoza</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática VI: Trastornos neurológicos obstétricos</div>
+                <div class="topic-content">7. Eclampsia y estatus epiléptico en el embarazo</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(6)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-6">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-6">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Diferenciar eclampsia y estatus epiléptico, y su tratamiento urgente</li>
+                    <li><span class="objective-bullet">2</span>Interpretar signos clínicos y estudios complementarios en emergencias neurológicas</li>
+                    <li><span class="objective-bullet">3</span>Aplicar manejo farmacológico y soporte avanzado</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 7 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">7</div>
+                <div class="class-date">Martes 28 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Delgado</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática VII: Complicaciones sistémicas en el embarazo</div>
+                <div class="topic-content">
+                    8. Shock séptico e hígado graso del embarazo<br />
+                    9. Lesión renal aguda en el embarazo
+                </div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(7)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-7">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-7">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Reconocer fisiopatología y diagnóstico de shock séptico en la gestante</li>
+                    <li><span class="objective-bullet">2</span>Identificar y manejar el hígado graso agudo del embarazo</li>
+                    <li><span class="objective-bullet">3</span>Diagnosticar y tratar lesión renal aguda en paciente obstétrica crítica</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 8 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">8</div>
+                <div class="class-date">Viernes 31 de octubre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Vanegas</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática VIII: Evento cerebrovascular en el embarazo</div>
+                <div class="topic-content">10. Evento cerebrovascular agudo en el embarazo</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(8)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-8">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-8">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Identificar signos, diagnósticos y manejo del evento cerebrovascular en embarazo</li>
+                    <li><span class="objective-bullet">2</span>Aplicar protocolos adaptados para trombólisis en la gestante</li>
+                    <li><span class="objective-bullet">3</span>Reconocer complicaciones y necesidades de cuidados intensivos</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Clase 9 -->
+        <div class="class-card">
+            <div class="class-header">
+                <div class="class-number">9</div>
+                <div class="class-date">Martes 4 de noviembre</div>
+                <div class="tutor-badge"><span class="tutor-icon">👨‍⚕️</span>Dr. Vanegas</div>
+            </div>
+            <div class="class-topic">
+                <div class="topic-title">Temática IX: Emergencias tromboembólicas</div>
+                <div class="topic-content">Embolia de líquido amniótico y tromboembolismo en el embarazo</div>
+            </div>
+            <button class="objectives-toggle" onclick="toggleObjectives(9)">
+                🎯 Ver Objetivos de Aprendizaje <span class="toggle-icon" id="icon-9">▼</span>
+            </button>
+            <div class="objectives-section" id="objectives-9">
+                <div class="objectives-title">Objetivos de Aprendizaje</div>
+                <ul class="objectives-list">
+                    <li><span class="objective-bullet">1</span>Describir la fisiopatología de la embolia de líquido amniótico y el tromboembolismo en el embarazo</li>
+                    <li><span class="objective-bullet">2</span>Reconocer los factores de riesgo, manifestaciones clínicas y criterios diagnósticos de estas emergencias</li>
+                    <li><span class="objective-bullet">3</span>Aplicar estrategias de manejo intensivo y prevención de complicaciones relacionadas en la terapia obstétrica</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Examen Final -->
+        <div class="exam-card">
+            <div class="exam-icon">🎓</div>
+            <div>EXAMEN FINAL</div>
+            <div style="font-size:1.2rem; margin-top:0.5rem;">Viernes 7 de noviembre 2025</div>
+            <div style="font-size:1rem; margin-top:0.5rem;">Responsable: Dr. Vanegas</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Hospital Militar Escuela Dr. Alejandro Dávila Bolaños</p>
+        <p>&copy; 2025 Curso Cuidados Intensivos Obstétricos</p>
+    </footer>
+
+    <script>
+        function toggleObjectives(num) {
+            const section = document.getElementById('objectives-' + num);
+            const icon = document.getElementById('icon-' + num);
+            if (section && icon) {
+                if (section.classList.contains('show')) {
+                    section.classList.remove('show');
+                    icon.classList.remove('rotated');
+                } else {
+                    section.classList.add('show');
+                    icon.classList.add('rotated');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
